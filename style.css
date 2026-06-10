@@ -418,3 +418,29 @@ ul {
         margin-bottom: var(--spacing-xs);
     }
 }
+
+/* Member SNS Link Styles */
+.member-sns {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    vertical-align: middle;
+}
+
+.member-sns:hover {
+    color: var(--color-text);
+    opacity: 1;
+}
+
+.member-sns svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+}
+
