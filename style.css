@@ -240,6 +240,16 @@ ul {
     padding-top: var(--spacing-sm);
 }
 
+.news-detail a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: var(--color-text);
+}
+
+.news-detail a:hover {
+    color: var(--color-text-muted);
+}
+
 /* Biography Section */
 .bio-content p {
     margin-bottom: var(--spacing-md);
