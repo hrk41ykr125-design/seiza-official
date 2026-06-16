@@ -464,3 +464,32 @@ ul {
     fill: none;
 }
 
+/* Instagram post link button */
+.ig-post-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.ig-post-link svg {
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+}
+
+.ig-post-link:hover {
+    background: rgba(193, 150, 235, 0.15);
+    border-color: rgba(193, 150, 235, 0.4);
+    color: var(--color-text);
+}
+
