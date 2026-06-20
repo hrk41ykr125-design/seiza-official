@@ -464,8 +464,9 @@ ul {
     fill: none;
 }
 
-/* Instagram post link button */
-.ig-post-link {
+/* Instagram & YouTube post link button */
+.ig-post-link,
+.yt-post-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -481,13 +482,15 @@ ul {
     backdrop-filter: blur(4px);
 }
 
-.ig-post-link svg {
+.ig-post-link svg,
+.yt-post-link svg {
     flex-shrink: 0;
     stroke: currentColor;
     fill: none;
 }
 
-.ig-post-link:hover {
+.ig-post-link:hover,
+.yt-post-link:hover {
     background: rgba(193, 150, 235, 0.15);
     border-color: rgba(193, 150, 235, 0.4);
     color: var(--color-text);
