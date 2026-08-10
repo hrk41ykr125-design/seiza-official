@@ -65,6 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Unload iframes when the tab pane becomes inactive to prevent TikTok overload protect triggers
+    const unloadPaneIframes = (pane) => {
+        const iframes = pane.querySelectorAll('iframe[data-src]');
+        iframes.forEach(iframe => {
+            iframe.src = 'about:blank';
+        });
+    };
+
     // Initialize the default active pane (Mitsuki)
     const initialActivePane = document.querySelector('.member-pane.active');
     if (initialActivePane) {
@@ -74,6 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const member = btn.getAttribute('data-member');
+            
+            // Unload currently active pane before switching
+            const currentActivePane = document.querySelector('.member-pane.active');
+            if (currentActivePane) {
+                unloadPaneIframes(currentActivePane);
+            }
             
             // Remove active classes
             tabButtons.forEach(b => b.classList.remove('active'));

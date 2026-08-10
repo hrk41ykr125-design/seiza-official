@@ -595,6 +595,11 @@ ul {
     gap: var(--spacing-sm);
 }
 
+.instagram-videos-grid.single-video {
+    max-width: 326px;
+    margin: 0 auto;
+}
+
 .instagram-video-item {
     position: relative;
     width: 100%;
