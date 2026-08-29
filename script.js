@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Uncomment to only animate once
-                // observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -50,8 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         iframe.insertAdjacentElement('afterend', link);
     };
 
-    // Load iframes dynamically when the tab pane becomes active
+    // Load iframes dynamically when the tab pane becomes active or scrolled to
     const loadPaneIframes = (pane) => {
+        if (!pane) return;
         const iframes = pane.querySelectorAll('iframe[data-src]');
         iframes.forEach(iframe => {
             addInstagramFallbackLink(iframe);
@@ -59,46 +58,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 iframe.src = iframe.getAttribute('data-src');
             }
         });
-        // Re-process Instagram embed script if it is loaded
         if (window.instgrm) {
             window.instgrm.Embeds.process();
         }
     };
 
-    // Unload iframes when the tab pane becomes inactive to prevent TikTok overload protect triggers
+    // Unload iframes when the tab pane becomes inactive
     const unloadPaneIframes = (pane) => {
+        if (!pane) return;
         const iframes = pane.querySelectorAll('iframe[data-src]');
         iframes.forEach(iframe => {
             iframe.src = 'about:blank';
         });
     };
 
-    // Initialize the default active pane (Mitsuki)
-    const initialActivePane = document.querySelector('.member-pane.active');
-    if (initialActivePane) {
-        loadPaneIframes(initialActivePane);
+    // Lazy load default active pane (Mitsuki) only when Biography section comes near viewport
+    const bioSection = document.getElementById('biography');
+    if (bioSection) {
+        let loadedInitialPane = false;
+        const bioObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !loadedInitialPane) {
+                    loadedInitialPane = true;
+                    const initialActivePane = document.querySelector('.member-pane.active');
+                    if (initialActivePane) {
+                        loadPaneIframes(initialActivePane);
+                    }
+                    bioObserver.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '200px 0px' });
+        bioObserver.observe(bioSection);
     }
 
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const member = btn.getAttribute('data-member');
             
-            // Unload currently active pane before switching
             const currentActivePane = document.querySelector('.member-pane.active');
             if (currentActivePane) {
                 unloadPaneIframes(currentActivePane);
             }
             
-            // Remove active classes
             tabButtons.forEach(b => b.classList.remove('active'));
             panes.forEach(p => p.classList.remove('active'));
             
-            // Add active class to clicked tab and corresponding pane
             btn.classList.add('active');
             const targetPane = document.getElementById(`pane-${member}`);
             if (targetPane) {
                 targetPane.classList.add('active');
-                // Load iframes for the newly active pane
                 loadPaneIframes(targetPane);
             }
         });
